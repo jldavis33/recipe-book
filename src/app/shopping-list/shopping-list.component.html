@@ -2,6 +2,11 @@
   <div class="col-10">
     <app-shopping-edit></app-shopping-edit>
     <hr>
-    <p>The list</p>
+    <div class="list-group">
+        <button *ngFor="let ingredient of ingredients"
+            class="list-group-item list-group-item-action" type="button">
+            {{ ingredient.name }} ({{ ingredient.amount }})
+        </button>
+    </div>
   </div>
 </div>
