@@ -9,7 +9,12 @@ export class DropdownDirective implements OnInit {
     private isOpen = false;
     private dropdownToggle?: HTMLButtonElement;
     private dropdownMenu?: HTMLUListElement;
-    private styleDefinition: {[index: string]:any} = {position: 'absolute', inset: '0 auto auto 0', margin: '0', transform: 'translate3d(0, 40px, 0)'}
+    private styleDefinition: { [index: string]: any } = {
+        position: 'absolute',
+        inset: '0 auto auto 0',
+        margin: '0',
+        transform: 'translate3d(0, 40px, 0)'
+    }
 
     constructor(private elRef: ElementRef, private renderer: Renderer2) { }
 
@@ -22,20 +27,22 @@ export class DropdownDirective implements OnInit {
      * When the host is "clicked", toggle the "show" class on the host `<button>` and sibling, `<ul>`.
      * Also toggle the necessary _styling_ for the `<ul>`.
      */
-    @HostListener('click') toggleOpen() {
-        if (!this.isOpen) {
+    @HostListener('document:click', ['$event']) toggleOpen(event: Event) {
+        if (!this.isOpen && this.dropdownToggle == event.target) {
             this.renderer.addClass(this.dropdownToggle, 'show');
             this.renderer.addClass(this.dropdownMenu, 'show');
 
             for (let attr in this.styleDefinition) {
                 this.renderer.setStyle(this.dropdownMenu, attr, this.styleDefinition[attr]);
             }
-        } else {
+
+            this.isOpen = !this.isOpen;
+        } else if (this.isOpen) {
             this.renderer.removeClass(this.dropdownToggle, 'show');
             this.renderer.removeClass(this.dropdownMenu, 'show');
             this.renderer.removeAttribute(this.dropdownMenu, 'style')
+            this.isOpen = !this.isOpen;
         }
-        this.isOpen = !this.isOpen;
     }
 }
 
