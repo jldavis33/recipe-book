@@ -11,19 +11,13 @@ import { NgForm } from '@angular/forms';
 export class ShoppingEditComponent {
     constructor(private shoppingListService: ShoppingListService) { }
 
-    addShoppingListItem(name: string, amount: number) {
-        if (name && amount) {
-            this.shoppingListService.addIngredient(new Ingredient(
-                name,
-                amount
-            ));
-        }
-    }
-
     onAddItem(form: NgForm) {
-        this.addShoppingListItem(
-            form.value.name,
-            form.value.amount
-        );
+        const { name, amount } = form.value;
+
+        if (name && +amount) {
+            this.shoppingListService.addIngredient(
+                new Ingredient(name, +amount)
+            )
+        }
     }
 }
