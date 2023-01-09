@@ -1,26 +1,30 @@
 <h3 *ngIf="editMode">Edit mode!</h3>
 <h3 *ngIf="!editMode">Create New Recipe!</h3>
 
-<form [formGroup]="form">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+        <button type="submit" class="btn btn-success" [disabled]="form.invalid">Save</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="closeForm()">Cancel</button>
+    </div>
     <div class="mb-3">
         <label for="name">Recipe Name</label>
-        <input
+        <input [ngClass]="{ 'is-invalid': showControlError('name') }"
             type="text"
             id="name"
             formControlName="name"
             class="form-control">
     </div>
     <div class="mb-3">
-        <label for="url">Recipe Image URL</label>
-        <input
+        <label for="imagePath">Recipe Image URL</label>
+        <input [ngClass]="{ 'is-invalid': showControlError('imagePath') }"
             type="text"
-            id="url"
-            formControlName="url"
+            id="imagePath"
+            formControlName="imagePath"
             class="form-control">
     </div>
     <div class="mb-3">
         <label for="description">Description</label>
-        <textarea
+        <textarea [ngClass]="{ 'is-invalid': showControlError('description') }"
             id="description"
             formControlName="description"
             class="form-control"></textarea>
@@ -32,7 +36,7 @@
             <div class="col">
                 <div class="mb-3">
                     <label [for]="'ingredientName'+i">Name</label>
-                    <input
+                    <input [ngClass]="{ 'is-invalid': showControlError('ingredients.'+i+'.name') }"
                         [id]="'ingredientName'+i"
                         formControlName="name"
                         type="text"
@@ -42,7 +46,7 @@
             <div class="col flex-shrink-1 flex-grow-0">
                 <div class="mb-3">
                     <label [for]="'ingredientAmount'+i">Amount</label>
-                    <input
+                    <input [ngClass]="{ 'is-invalid': showControlError('ingredients.'+i+'.amount') }"
                         [id]="'ingredientAmount'+i"
                         formControlName="amount"
                         type="number"
@@ -54,5 +58,5 @@
             </div>
         </div>
     </div>
-    <button class="btn btn-light" (click)="onAddIngredient()">Add Ingredient</button>
+    <button type="button" class="btn btn-light" (click)="onAddIngredient()">Add Ingredient</button>
 </form>
