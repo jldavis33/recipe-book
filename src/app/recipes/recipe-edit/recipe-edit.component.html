@@ -20,7 +20,11 @@
             type="text"
             id="imagePath"
             formControlName="imagePath"
+               #imagePath
             class="form-control">
+    </div>
+    <div class="mb-3" *ngIf="imagePath.value">
+        <img [src]="imagePath.value" class="img-fluid" style="{ max-height: 200px; }" alt />
     </div>
     <div class="mb-3">
         <label for="description">Description</label>
