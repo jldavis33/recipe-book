@@ -28,13 +28,13 @@
     <hr>
     <h4>Ingredients</h4>
     <div formArrayName="ingredients">
-        <div class="row" *ngFor="let control of controls; let i = index">
+        <div class="row" *ngFor="let control of formIngredients.controls; let i = index" [formGroupName]="i">
             <div class="col">
                 <div class="mb-3">
                     <label [for]="'ingredientName'+i">Name</label>
                     <input
                         [id]="'ingredientName'+i"
-                        [formControlName]="'ingredientName'+i"
+                        formControlName="name"
                         type="text"
                         class="form-control">
                 </div>
@@ -44,7 +44,7 @@
                     <label [for]="'ingredientAmount'+i">Amount</label>
                     <input
                         [id]="'ingredientAmount'+i"
-                        [formControlName]="'ingredientAmount'+i"
+                        formControlName="amount"
                         type="number"
                         class="form-control">
                 </div>
